@@ -33,7 +33,7 @@ const HomeScreen = () => {
       onClearInput={({ id }) => {
         id === "origin" && dispatch(setOrigin(null));
       }}
-      countryId="gb,us,ke"
+      countryId="ke"
       debounce={400}      
       containerStyle={{
         marginBottom: 12,
@@ -42,7 +42,9 @@ const HomeScreen = () => {
       }}
       inputStyle={{
         fontSize: 18,
-      }}      
+      }}    
+      
+      
     />
 
         <NavOptions />

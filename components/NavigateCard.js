@@ -18,8 +18,8 @@ const NavigateCard = () => {
   return (
     <SafeAreaView style={tw`bg-white flex-1`}>
       <Text style={tw`text-center py-5 text-xl`}>Good Morning, User</Text>
-      <View style={tw`border-t border-gray-200 flex-shrink`}>
-        <View>
+      <View style={tw`border-t border-gray-200 flex-shrink z-50`}>
+      <View style={{ position: 'relative', zIndex: 100 }}>
         <MapboxPlacesAutocomplete 
             id="destination"
             placeholder="Where To?"
@@ -36,11 +36,11 @@ const NavigateCard = () => {
             onClearInput={({ id }) => {
                 id === "destination" && dispatch(setDestination(null));
             }}
-            countryId="gb,us,ke"
+            countryId="ke"
             debounce={400}      
             containerStyle={{
                 flex: 0,
-                zIndex: 1,
+                zIndex: 2,
                 marginBottom: 12,
             }}
             inputStyle={{
@@ -53,10 +53,14 @@ const NavigateCard = () => {
         />
         </View>
 
+
         <NavFavourites />
 
-        <View style={tw`flex-row bg-white justify-evenly py-2 mt-auto border-t border-gray-100`}>
-          <TouchableOpacity style={tw`flex flex-row bg-black w-24 px-4 py-3 rounded-full`}>
+        </View>
+
+        <View style={tw`flex-row bg-white justify-evenly py-2 mt-auto border-t border-gray-100 z-0 `} >
+          <TouchableOpacity onPress={() => navigation.navigate("RideOptionsCard")}
+          style={tw`flex flex-row justify-between bg-black w-24 px-4 py-3 rounded-full`}>
             <Icon name="car" type="ionicon" color="white" size={16} />
             <Text style={tw`text-white text-center`}>Riders</Text>
           </TouchableOpacity>
@@ -66,7 +70,7 @@ const NavigateCard = () => {
           </TouchableOpacity>
         </View>
 
-      </View>
+      
     </SafeAreaView>
   )
 }

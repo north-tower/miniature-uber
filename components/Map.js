@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import MapboxDirections from '@mapbox/mapbox-sdk/services/directions';
 import MapView, { Marker, Polyline } from 'react-native-maps';
-import { useSelector } from 'react-redux';
-import { selectDestination, selectOrigin } from '../slices/navSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectDestination, selectOrigin, setTravelTimeInformation } from '../slices/navSlice';
 
 const Map = () => {
   const origin = useSelector(selectOrigin);
@@ -11,6 +11,7 @@ const Map = () => {
 
   const [directions, setDirections] = useState([]);
   const mapRef = useRef(null);
+  const dispatch = useDispatch();
 
 
   useEffect(() => {
@@ -33,11 +34,16 @@ const Map = () => {
         mapRef.current.fitToSuppliedMarkers(["origin", "destination"], {
           edgePadding: { top: 50, right: 50 , bottom: 50, left: 50},
         });
+           // Get travel time and distance
+     const travelTime = resp.body.routes[0].legs[0].duration;
+     const distance = resp.body.routes[0].legs[0].distance;
+        dispatch(setTravelTimeInformation(resp.body.routes[0].legs[0]))
       }
     };
-    getDirections();
+     getDirections();
   }, [origin, destination]);
 
+ 
 
   return (
     <MapView
